@@ -1263,7 +1263,7 @@ var pedigreejs = (function (exports) {
         "father": "m21",
         "proband": true,
         "status": "0",
-        "display_name": "me"
+        "display_name": ""
       };
       clear(opts); // clear all storage data
     }
@@ -1434,12 +1434,12 @@ var pedigreejs = (function (exports) {
     } else {
       opts.dataset = [{
         "name": "m21",
-        "display_name": "father",
+        "display_name": "",
         "sex": "M",
         "top_level": true
       }, {
         "name": "f21",
-        "display_name": "mother",
+        "display_name": "",
         "sex": "F",
         "top_level": true
       }, proband];
@@ -3312,6 +3312,9 @@ var pedigreejs = (function (exports) {
       diseases: [{
         'type': 'breast_cancer',
         'color': '#F68F35'
+      }, {
+        'type': 'breast_cancer2',
+        'color': 'pink'
       }, {
         'type': 'ovarian_cancer',
         'color': '#4DAA4D'
