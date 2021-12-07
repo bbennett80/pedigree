@@ -3287,17 +3287,17 @@ var pedigreejs = (function (exports) {
       targetDiv: 'pedigree_edit',
       dataset: [{
         "name": "m21",
-        "display_name": "father",
+        "display_name": "",
         "sex": "M",
         "top_level": true
       }, {
         "name": "f21",
-        "display_name": "mother",
+        "display_name": "",
         "sex": "F",
         "top_level": true
       }, {
         "name": "ch1",
-        "display_name": "me",
+        "display_name": "",
         "sex": "F",
         "mother": "f21",
         "father": "m21",
@@ -3312,9 +3312,6 @@ var pedigreejs = (function (exports) {
       diseases: [{
         'type': 'breast_cancer',
         'color': '#F68F35'
-      }, {
-        'type': 'breast_cancer2',
-        'color': 'pink'
       }, {
         'type': 'ovarian_cancer',
         'color': '#4DAA4D'
