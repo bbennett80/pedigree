@@ -3110,15 +3110,15 @@ var pedigreejs = (function (exports) {
     table += '<tr><td colspan="2" id="id_status">' + '<label class="checkbox-inline"><input type="radio" name="status" value="0" ' + (parseInt(d.data.status) === 0 ? "checked" : "") + '>&thinsp;Alive</label>' + '<label class="checkbox-inline"><input type="radio" name="status" value="1" ' + (parseInt(d.data.status) === 1 ? "checked" : "") + '>&thinsp;Deceased</label>' + '</td></tr>';
     $("#id_status input[value='" + d.data.status + "']").prop('checked', true); // switches
 
-    var switches = ["adopted_in", "adopted_out", "miscarriage", "stillbirth", "termination"];
-    table += '<tr><td colspan="2"><strong>Reproduction:</strong></td></tr>';
-    table += '<tr><td colspan="2">';
+//     var switches = ["adopted_in", "adopted_out", "miscarriage", "stillbirth", "termination"];
+//     table += '<tr><td colspan="2"><strong>Reproduction:</strong></td></tr>';
+//     table += '<tr><td colspan="2">';
 
-    for (var iswitch = 0; iswitch < switches.length; iswitch++) {
-      var attr = switches[iswitch];
-      if (iswitch === 2) table += '</td></tr><tr><td colspan="2">';
-      table += '<label class="checkbox-inline"><input type="checkbox" id="id_' + attr + '" name="' + attr + '" value="0" ' + (d.data[attr] ? "checked" : "") + '>&thinsp;' + capitaliseFirstLetter(attr.replace('_', ' ')) + '</label>';
-    }
+//     for (var iswitch = 0; iswitch < switches.length; iswitch++) {
+//       var attr = switches[iswitch];
+//       if (iswitch === 2) table += '</td></tr><tr><td colspan="2">';
+//       table += '<label class="checkbox-inline"><input type="checkbox" id="id_' + attr + '" name="' + attr + '" value="0" ' + (d.data[attr] ? "checked" : "") + '>&thinsp;' + capitaliseFirstLetter(attr.replace('_', ' ')) + '</label>';
+//     }
 
     table += '</td></tr>'; //
 
