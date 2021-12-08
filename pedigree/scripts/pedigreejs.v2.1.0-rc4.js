@@ -3285,24 +3285,15 @@ var pedigreejs = (function (exports) {
     var opts = $.extend({
       // defaults
       targetDiv: 'pedigree_edit',
-      dataset: [{
-        "name": "m21",
-        "display_name": "",
-        "sex": "M",
-        "top_level": true
-      }, {
-        "name": "f21",
-        "display_name": "",
-        "sex": "F",
-        "top_level": true
-      }, {
-        "name": "ch1",
-        "display_name": "",
-        "sex": "F",
-        "mother": "f21",
-        "father": "m21",
-        "proband": true
-      }],
+      dataset: [
+      {"name":"aZhn","sex":"M","top_level":true},
+      {"name":"Guko","sex":"F","top_level":true},
+      {"name":"Jaqm","sex":"M","top_level":true},
+      {"name":"acKp","sex":"F","top_level":true},
+      {"name":"m21","display_name":"","sex":"M","mother":"Guko","father":"aZhn"},
+      {"name":"f21","display_name":"","sex":"F","mother":"acKp","father":"Jaqm"},
+      {"name":"ch1","display_name":"","sex":"F","mother":"f21","father":"m21","proband":true}
+      ],
       width: 600,
       height: 400,
       symbol_size: 35,
@@ -3312,9 +3303,6 @@ var pedigreejs = (function (exports) {
       diseases: [{
         'type': 'breast_cancer',
         'color': '#F68F35'
-      }, {
-        'type': 'breast_cancer2',
-        'color': 'pink'
       }, {
         'type': 'ovarian_cancer',
         'color': '#4DAA4D'
