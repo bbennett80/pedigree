@@ -2214,16 +2214,16 @@ var pedigreejs = (function (exports) {
 
     $("#load")[0].value = ''; // reset value
   } //
-  // https://www.cog-genomics.org/plink/1.9/formats#ped
-  // https://www.cog-genomics.org/plink/1.9/formats#fam
-  //	1. Family ID ('FID')
-  //	2. Within-family ID ('IID'; cannot be '0')
-  //	3. Within-family ID of father ('0' if father isn't in dataset)
-  //	4. Within-family ID of mother ('0' if mother isn't in dataset)
-  //	5. Sex code ('1' = male, '2' = female, '0' = unknown)
-  //	6. Phenotype value ('1' = control, '2' = case, '-9'/'0'/non-numeric = missing data if case/control)
-  //  7. Genotypes (column 7 onwards);
-  //	 columns 7 & 8 are allele calls for first variant ('0' = no call); colummns 9 & 10 are calls for second variant etc.
+  https://www.cog-genomics.org/plink/1.9/formats#ped
+  https://www.cog-genomics.org/plink/1.9/formats#fam
+  	1. Family ID ('FID')
+  	2. Within-family ID ('IID'; cannot be '0')
+  	3. Within-family ID of father ('0' if father isn't in dataset)
+  	4. Within-family ID of mother ('0' if mother isn't in dataset)
+  	5. Sex code ('1' = male, '2' = female, '0' = unknown)
+  	6. Phenotype value ('1' = control, '2' = case, '-9'/'0'/non-numeric = missing data if case/control)
+   7. Genotypes (column 7 onwards);
+  	 columns 7 & 8 are allele calls for first variant ('0' = no call); colummns 9 & 10 are calls for second variant etc.
 
 
   function readLinkage(boadicea_lines) {
