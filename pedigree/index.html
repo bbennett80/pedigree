@@ -237,36 +237,40 @@
 	<div class="container">
 		<h3>Building Pedigrees</h3>
 		<p>
-			Individuals can be added to the pedigree by placing the mouse over an individual to reveal
-			the widgets used for editing and adding a
-			partner <i class="fa fa-link" aria-hidden="true"></i> (two people with at least one child),
-			parents <i class="fa fa-arrow-up" aria-hidden="true"></i>,
-			a sibling <i class="fa fa-user-plus" aria-hidden="true"></i>,
-			or a child <i class="fa fa-arrow-down" aria-hidden="true"></i>.
-			Options are given to add
-			male <i class="fa fa-square-o" aria-hidden="true"></i>,
-			female <i class="fa fa-circle-o" aria-hidden="true"></i>,
-			unknown  <i class="fa fa-square-o fa-rotate-45" aria-hidden="true"></i>,
-			dizygotic (fraternal) twin <i class="fa fa-angle-up" style="font-size:1.5em" aria-hidden="true"></i>
-			or monozygotic (identical) twin <i class="fa fa-caret-up" style="font-size:1.5em" aria-hidden="true"></i>.
+			Basic use:
+			<li>'undo' <i class="fa fa-undo" aria-hidden="true"></i></li>
+			<li>'redo' <i class="fa fa-repeat" aria-hidden="true"></i></li>
+			<li>'reset' <i class="fa fa-refresh" aria-hidden="true"></i></li>
+			<li>full screen editing <i class="fa fa-arrows-alt" aria-hidden="true"></i></li>
 		</p>
 		<p>
-			If the 'edit' parameter is set in the configuration of pedigreejs then the <i class="fa fa-cog" aria-hidden="true"></i> widget
-			is also displayed. When this widget is clicked it opens an editor dialog of the attributes associated for the individual. A default
-			editor is provided that can be overridden and customised.
+			Individuals can be added to the pedigree by placing the mouse over an individual to reveal
+			the editing widgets:
+			<li>partner <i class="fa fa-link" aria-hidden="true"></i> (two people with at least one child)</li>
+			<li>parents <i class="fa fa-arrow-up" aria-hidden="true"></i></li>
+			<li>sibling <i class="fa fa-user-plus" aria-hidden="true"></i></li>
+			<li>child <i class="fa fa-arrow-down" aria-hidden="true"></i></li>
 		</p>
-			<p>Half siblings can be added by creating a new partner (with <i class="fa fa-link" aria-hidden="true"></i>)
+		<p>
+			Options are given to add:
+			<li>male <i class="fa fa-square-o" aria-hidden="true"></i></li>
+			<li>female <i class="fa fa-circle-o" aria-hidden="true"></i></li>
+			<li>unknown  <i class="fa fa-square-o fa-rotate-45" aria-hidden="true"></i></li>
+			<li>dizygotic (fraternal) twin <i class="fa fa-angle-up" style="font-size:1.5em" aria-hidden="true"></i></li>
+			<li>monozygotic (identical) twin <i class="fa fa-caret-up" style="font-size:1.5em" aria-hidden="true"></i></li>
+		</p>
+		<p>
+			The 'edit' <i class="fa fa-cog" aria-hidden="true"></i> button opens the attributes associated for the individual. 
+		</p>
+		<p>
+			Half siblings can be added by creating a new partner (with <i class="fa fa-link" aria-hidden="true"></i>)
 			for the parent in common to the siblings.
-			Consanguineous partners can be created between individual's at the same or different levels in the pedigree
-			tree, <i>e.g.</i> cousins.
-			This is done by placing the mouse over one of the partners and clicking and dragging the
+		</p>
+		<p>
+			Consanguineous partners can be created placing the mouse over one of the partners and clicking and dragging the
 			triple dashed line widget <img alt="handle" src="src/img/handle.png"> in the direction of their new partner.
 		</p>
-		<p>
-			There are 'undo' <i class="fa fa-undo" aria-hidden="true"></i>,
-			'redo' <i class="fa fa-repeat" aria-hidden="true"></i> and 'reset' <i class="fa fa-refresh" aria-hidden="true"></i>
-			buttons at the top and a button to enable full screen editing <i class="fa fa-arrows-alt" aria-hidden="true"></i>.
-		</p>
+		
 	
 		<h3>Loading and Saving Pedigree Data</h3>
 		<p>The pedigree can be saved out and loaded back in. Support is given to loading
