@@ -2214,16 +2214,16 @@ var pedigreejs = (function (exports) {
 
     $("#load")[0].value = ''; // reset value
   } //
-  https://www.cog-genomics.org/plink/1.9/formats#ped
-  https://www.cog-genomics.org/plink/1.9/formats#fam
-  	1. Family ID ('FID')
-  	2. Within-family ID ('IID'; cannot be '0')
-  	3. Within-family ID of father ('0' if father isn't in dataset)
-  	4. Within-family ID of mother ('0' if mother isn't in dataset)
-  	5. Sex code ('1' = male, '2' = female, '0' = unknown)
-  	6. Phenotype value ('1' = control, '2' = case, '-9'/'0'/non-numeric = missing data if case/control)
-   7. Genotypes (column 7 onwards);
-  	 columns 7 & 8 are allele calls for first variant ('0' = no call); colummns 9 & 10 are calls for second variant etc.
+  // https://www.cog-genomics.org/plink/1.9/formats#ped
+  // https://www.cog-genomics.org/plink/1.9/formats#fam
+  //	1. Family ID ('FID')
+  //	2. Within-family ID ('IID'; cannot be '0')
+  //	3. Within-family ID of father ('0' if father isn't in dataset)
+  //	4. Within-family ID of mother ('0' if mother isn't in dataset)
+  //	5. Sex code ('1' = male, '2' = female, '0' = unknown)
+  //	6. Phenotype value ('1' = control, '2' = case, '-9'/'0'/non-numeric = missing data if case/control)
+  //  7. Genotypes (column 7 onwards);
+  //	 columns 7 & 8 are allele calls for first variant ('0' = no call); colummns 9 & 10 are calls for second variant etc.
 
 
   function readLinkage(boadicea_lines) {
@@ -3110,14 +3110,14 @@ var pedigreejs = (function (exports) {
     table += '<tr><td colspan="2" id="id_status">' + '<label class="checkbox-inline"><input type="radio" name="status" value="0" ' + (parseInt(d.data.status) === 0 ? "checked" : "") + '>&thinsp;Alive</label>' + '<label class="checkbox-inline"><input type="radio" name="status" value="1" ' + (parseInt(d.data.status) === 1 ? "checked" : "") + '>&thinsp;Deceased</label>' + '</td></tr>';
     $("#id_status input[value='" + d.data.status + "']").prop('checked', true); // switches
 
-//     var switches = ["adopted_in", "adopted_out", "miscarriage", "stillbirth", "termination"];
-//     table += '<tr><td colspan="2"><strong>Reproduction:</strong></td></tr>';
-//     table += '<tr><td colspan="2">';
+    var switches = ["adopted_in", "adopted_out", "miscarriage", "stillbirth", "termination"];
+    table += '<tr><td colspan="2"><strong>Reproduction:</strong></td></tr>';
+    table += '<tr><td colspan="2">';
 
-//     for (var iswitch = 0; iswitch < switches.length; iswitch++) {
-//       var attr = switches[iswitch];
-//       if (iswitch === 2) table += '</td></tr><tr><td colspan="2">';
-//       table += '<label class="checkbox-inline"><input type="checkbox" id="id_' + attr + '" name="' + attr + '" value="0" ' + (d.data[attr] ? "checked" : "") + '>&thinsp;' + capitaliseFirstLetter(attr.replace('_', ' ')) + '</label>';
+    for (var iswitch = 0; iswitch < switches.length; iswitch++) {
+      var attr = switches[iswitch];
+      if (iswitch === 2) table += '</td></tr><tr><td colspan="2">';
+      table += '<label class="checkbox-inline"><input type="checkbox" id="id_' + attr + '" name="' + attr + '" value="0" ' + (d.data[attr] ? "checked" : "") + '>&thinsp;' + capitaliseFirstLetter(attr.replace('_', ' ')) + '</label>';
     }
 
     table += '</td></tr>'; //
