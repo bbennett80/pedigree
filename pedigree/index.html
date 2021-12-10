@@ -28,9 +28,6 @@
 	</style>
 
 	<script type="text/javascript">
-	function capitaliseFirstLetter(string) {
-	    return string.charAt(0).toUpperCase() + string.slice(1);
-	}
 	
 	var DEFAULT_DISEASES = [
 		 {'type': 'breast_cancer', 'color': '#F68F35'},
@@ -52,7 +49,8 @@
 			'height': 500,
 			'symbol_size': 35,
 			'edit': true,
-        	'diseases': $.extend(true, [], DEFAULT_DISEASES),
+			'keep_proband_on_reset': false,
+        		'diseases': $.extend(true, [], DEFAULT_DISEASES),
 			'DEBUG': (pedigreejs.pedigree_utils.urlParam('debug') === null ? false : true)
 		};
 		$('#opts').append(JSON.stringify(opts, null, 4));
@@ -147,7 +145,7 @@
 				$.each(opts.diseases, function(k, v) {
 					var disease_color = '&thinsp;<span style="padding-left:5px;background:'+opts.diseases[k].color+'"></span>';
 					tab += "<tr>" +
-								"<td style='text-align:right'>"+capitaliseFirstLetter(v.type.replace(/_/g , " "))+
+								"<td style='text-align:right'>"+
 									disease_color+"&nbsp;</td>" +
 								"<td>" +
 							      "<input type='text' class='form-control' id='disease_color-"+v.type+"' value='" + opts.diseases[k].color + "'>" +
@@ -219,7 +217,7 @@
 <br>
 	<div class="text-center">
 		<h3>Pedigree</h3>
-		<h5>Genetic Cancer Rish Assessment</h5>
+		<h5>Genetic Cancer Risk Assessment</h5>
 		<label class="btn btn-default btn-file">
 			<input id="load" type="file" style="display: none;"/>Load
 		</label>	
