@@ -52,7 +52,8 @@
 			'height': 500,
 			'symbol_size': 35,
 			'edit': true,
-        	'diseases': $.extend(true, [], DEFAULT_DISEASES),
+			'keep_proband_on_reset': false,
+        		'diseases': $.extend(true, [], DEFAULT_DISEASES),
 			'DEBUG': (pedigreejs.pedigree_utils.urlParam('debug') === null ? false : true)
 		};
 		$('#opts').append(JSON.stringify(opts, null, 4));
