@@ -135,13 +135,13 @@ export function reset(opts, keep_proband) {
 		proband = newdataset[getProbandIndex(newdataset)];
 		//let children = pedigree_util.getChildren(newdataset, proband);
 		proband.name = "ch1";
-		proband.mother = "f21";
-		proband.father = "m21";
+		proband.mother = "mother";
+		proband.father = "father";
 		// clear pedigree data but keep proband data and risk factors
 		pedcache.clear_pedigree_data(opts)
 	} else {
 		proband = {
-			"name":"ch1","sex":"F","mother":"f21","father":"m21","proband":true,"status":"0","display_name":"me"
+			"name":"ch1","sex":"F","mother":"mother","father":"father","proband":true,"status":"0","display_name":""
 		};
 		pedcache.clear(opts); // clear all storage data
 	}
@@ -157,11 +157,11 @@ export function reset(opts, keep_proband) {
 			{"name":"dOH","sex":"F","top_level":true,"status":"0","display_name":"maternal grandmother"},
 			{"name":"MKg","sex":"F","mother":"MAk","father":"wZA","status":"0","display_name":"paternal aunt"},
 			{"name":"xsm","sex":"M","mother":"MAk","father":"wZA","status":"0","display_name":"paternal uncle"},
-			{"name":"m21","sex":"M","mother":"MAk","father":"wZA","status":"0","display_name":"father"},
-			{"name":"f21","sex":"F","mother":"dOH","father":"zwB","status":"0","display_name":"mother"},
-			{"name":"aOH","sex":"F","mother":"f21","father":"m21","status":"0","display_name":"sister"},
-			{"name":"Vha","sex":"M","mother":"f21","father":"m21","status":"0","display_name":"brother"},
-			{"name":"Spj","sex":"M","mother":"f21","father":"m21","noparents":true,"status":"0","display_name":"partner"},
+			{"name":"father","sex":"M","mother":"MAk","father":"wZA","status":"0","display_name":"father"},
+			{"name":"mother","sex":"F","mother":"dOH","father":"zwB","status":"0","display_name":"mother"},
+			{"name":"aOH","sex":"F","mother":"mother","father":"father","status":"0","display_name":"sister"},
+			{"name":"Vha","sex":"M","mother":"mother","father":"father","status":"0","display_name":"brother"},
+			{"name":"Spj","sex":"M","mother":"mother","father":"father","noparents":true,"status":"0","display_name":"partner"},
 			proband,
 			{"name":"zhk","sex":"F","mother":"ch1","father":"Spj","status":"0","display_name":"daughter"},
 			{"name":"Knx","display_name":"son","sex":"M","mother":"ch1","father":"Spj","status":"0"},
@@ -169,18 +169,22 @@ export function reset(opts, keep_proband) {
 			{"name":"xIw","display_name":"maternal uncle","sex":"M","mother":"dOH","father":"zwB","status":"0"}];
 	} else if(selected.length > 0 && selected.val() == 'extended1') {    // primary relatives
 		opts.dataset = [
-			{"name":"m21","sex":"M","mother":null,"father":null,"status":"0","display_name":"father","noparents":true},
-			{"name":"f21","sex":"F","mother":null,"father":null,"status":"0","display_name":"mother","noparents":true},
-			{"name":"aOH","sex":"F","mother":"f21","father":"m21","status":"0","display_name":"sister"},
-			{"name":"Vha","sex":"M","mother":"f21","father":"m21","status":"0","display_name":"brother"},
-			{"name":"Spj","sex":"M","mother":"f21","father":"m21","noparents":true,"status":"0","display_name":"partner"},
+			{"name":"father","sex":"M","mother":null,"father":null,"status":"0","display_name":"father","noparents":true},
+			{"name":"mother","sex":"F","mother":null,"father":null,"status":"0","display_name":"mother","noparents":true},
+			{"name":"aOH","sex":"F","mother":"mother","father":"father","status":"0","display_name":"sister"},
+			{"name":"Vha","sex":"M","mother":"mother","father":"father","status":"0","display_name":"brother"},
+			{"name":"Spj","sex":"M","mother":"mother","father":"father","noparents":true,"status":"0","display_name":"partner"},
 			proband,
 			{"name":"zhk","sex":"F","mother":"ch1","father":"Spj","status":"0","display_name":"daughter"},
 			{"name":"Knx","display_name":"son","sex":"M","mother":"ch1","father":"Spj","status":"0"}];
 	} else {
 		opts.dataset = [
-			{"name": "m21", "display_name": "father", "sex": "M", "top_level": true},
-			{"name": "f21", "display_name": "mother", "sex": "F", "top_level": true},
+			{"name":"paternalgf","sex":"M","top_level":true},
+			{"name":"paternalgm","sex":"F","top_level":true},
+			{"name":"maternalgf","sex":"M","top_level":true},
+			{"name":"maternalgm","sex":"F","top_level":true},
+			{"name":"father","display_name":"","sex":"M","mother":"paternalgm","father":"paternalgf"},
+			{"name":"mother","display_name":"","sex":"F","mother":"maternalgm","father":"maternalgf"},
 			proband];
 	}
 	rebuild(opts);

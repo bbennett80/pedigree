@@ -17,7 +17,6 @@
 
 	<script type="module">
 
-
 		import * as pedigree from './es/pedigree.js';
 		import * as pedigree_utils from './es/pedigree_utils.js';
 		import * as pedigree_form from './es/pedigree_form.js';
@@ -67,8 +66,8 @@
 							['rad51d_gene_test', 'rad51c_gene_test', 'brip1_gene_test'],
 							['er_bc_pathology', 'pr_bc_pathology', 'her2_bc_pathology', 'ck14_bc_pathology', 'ck56_bc_pathology']
 						],
-					'DEBUG': (pedigree_utils.urlParam('debug') === null ? false : true)};
-
+					'DEBUG': (pedigree_utils.urlParam('debug') === null ? false : true)};	
+		
 			var local_dataset = pedcache.current(opts);
 			if (local_dataset !== undefined && local_dataset !== null) {
 				opts.dataset = local_dataset;
@@ -262,15 +261,14 @@
 			<li>full screen editing <i class="fa fa-arrows-alt" aria-hidden="true"></i></li>
 		</p>
 		<p>
-			Individuals can be added to the pedigree by placing the mouse over an individual to reveal
-			the editing widgets:
+			Add to the pedigree by placing the mouse over an individual:
 			<li>partner <i class="fa fa-link" aria-hidden="true"></i> (two people with at least one child)</li>
 			<li>parents <i class="fa fa-arrow-up" aria-hidden="true"></i></li>
 			<li>sibling <i class="fa fa-user-plus" aria-hidden="true"></i></li>
 			<li>child <i class="fa fa-arrow-down" aria-hidden="true"></i></li>
 		</p>
 		<p>
-			Options are given to add:
+			Options to add:
 			<li>male <i class="fa fa-square-o" aria-hidden="true"></i></li>
 			<li>female <i class="fa fa-circle-o" aria-hidden="true"></i></li>
 			<li>unknown  <i class="fa fa-square-o fa-rotate-45" aria-hidden="true"></i></li>
@@ -278,20 +276,20 @@
 			<li>monozygotic (identical) twin <i class="fa fa-caret-up" style="font-size:1.5em" aria-hidden="true"></i></li>
 		</p>
 		<p>
-			The 'edit' <i class="fa fa-cog" aria-hidden="true"></i> button opens the attributes associated for the individual. 
+			The 'edit' <i class="fa fa-cog" aria-hidden="true"></i> button opens details. 
 		</p>
 		<p>
 			Half siblings can be added by creating a new partner (with <i class="fa fa-link" aria-hidden="true"></i>)
 			for the parent in common to the siblings.
 		</p>
 		<p>
-			Consanguineous partners can be created placing the mouse over one of the partners and clicking and dragging the
-			triple dashed line widget <img alt="handle" src="src/img/handle.png"> in the direction of their new partner.
+			Consanguineous partners can be created placing the mouse over one of the partners then clicking and dragging the
+			triple dashed line widget <img alt="handle" src="./img/handle.png"> in the direction of their new partner.
 		</p>
 		
 	
 		<h3>Loading and Saving Pedigree Data</h3>
-		<p>The pedigree can be saved out and loaded back in. Support is given to loading
+		<p>Supported file formats: 
 			<a href="https://canrisk.atlassian.net/wiki/x/IoCeAg" target="_blank">CanRisk files</a>,
 			<a href="https://pluto.srl.cam.ac.uk/bd4/v4/docs/BWA_v4_Appendix_A.pdf" target="_blank">BOADICEA v4 files</a>,
 			and <a href="https://www.cog-genomics.org/plink/1.9/formats#ped" target="_blank">PED files</a>.<p>
