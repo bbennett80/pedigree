@@ -30,7 +30,10 @@ export function build(options) {
 			{'type': 'Breast', 'color': '#F68F35'},
 			{'type': 'Ovarian', 'color': '#4DAA4D'},
 			{'type': 'Pancreas', 'color': '#4289BA'},
-			{'type': 'Prostate', 'color': '#D5494A'}],
+			{'type': 'Prostate', 'color': '#D5494A'}
+			{'type': 'Colorectal', 'color': '#a3858b'}
+		],
+		
 		labels: ['stillbirth', ['age', 'yob'], 'alleles',
 							   ['brca1_gene_test', 'brca2_gene_test', 'palb2_gene_test', 'chek2_gene_test', 'atm_gene_test'],
 							   ['rad51d_gene_test', 'rad51c_gene_test', 'brip1_gene_test'],
