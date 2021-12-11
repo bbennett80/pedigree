@@ -12,20 +12,24 @@ export let roots = {};
 export function build(options) {
 	let opts = $.extend({ // defaults
 		targetDiv: 'pedigree_edit',
-		dataset: [ {"name": "m21", "display_name": "father", "sex": "M", "top_level": true},
-				   {"name": "f21", "display_name": "mother", "sex": "F", "top_level": true},
-				   {"name": "ch1", "display_name": "me", "sex": "F", "mother": "f21", "father": "m21", "proband": true}],
+		dataset: [ 
+				{"name":"paternalgf","sex":"M","top_level":true},
+				{"name":"paternalgm","sex":"F","top_level":true},
+				{"name":"maternalgf","sex":"M","top_level":true},
+				{"name":"maternalgm","sex":"F","top_level":true},
+				{"name":"father","display_name":"","sex":"M","mother":"paternalgm","father":"paternalgf"},
+				{"name":"mother","display_name":"","sex":"F","mother":"maternalgm","father":"maternalgf"},
+				{"name":"ch1","display_name":"","sex":"F","mother":"mother","father":"father","proband":true}],
 		width: 600,
 		height: 400,
 		symbol_size: 35,
 		zoomSrc: ['wheel', 'button'],
 		zoomIn: 1.0,
 		zoomOut: 1.0,
-		diseases: [	{'type': 'breast_cancer', 'colour': '#F68F35'},
-					{'type': 'breast_cancer2', 'colour': 'pink'},
-					{'type': 'ovarian_cancer', 'colour': '#4DAA4D'},
-					{'type': 'pancreatic_cancer', 'colour': '#4289BA'},
-					{'type': 'prostate_cancer', 'colour': '#D5494A'}],
+		diseases: [	{'type': 'Breast_cancer', 'color': '#F68F35'},
+					{'type': 'Ovarian_cancer', 'color': '#4DAA4D'},
+					{'type': 'Pancreatic_cancer', 'color': '#4289BA'},
+					{'type': 'Prostate_cancer', 'color': '#D5494A'}],
 		labels: ['stillbirth', ['age', 'yob'], 'alleles',
 							   ['brca1_gene_test', 'brca2_gene_test', 'palb2_gene_test', 'chek2_gene_test', 'atm_gene_test'],
 							   ['rad51d_gene_test', 'rad51c_gene_test', 'brip1_gene_test'],
@@ -154,7 +158,7 @@ export function build(options) {
 					return d3.symbolTriangle;
 				return d.data.sex == "F" ? d3.symbolCircle :d3.symbolSquare;}));
 
-	// pie plots for disease colours
+	// pie plots for disease colors
 	let pienode = node.filter(function (d) {return !(d.data.hidden && !opts.DEBUG);}).selectAll("pienode")
 	   .data(function(d) {	 		// set the disease data for the pie plot
 		   let ncancers = 0;
@@ -185,7 +189,7 @@ export function build(options) {
 						return 'darkgrey';
 					return opts.node_background;
 				}
-				return opts.diseases[i].colour;
+				return opts.diseases[i].color;
 			});
 
 	// adopted in/out brackets

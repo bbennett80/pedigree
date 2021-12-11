@@ -440,11 +440,11 @@ function openEditDialog(opts, d) {
 	$.each(opts.diseases, function(k, v) {
 		exclude.push(v.type+"_diagnosis_age");
 
-		let disease_colour = '&thinsp;<span style="padding-left:5px;background:'+opts.diseases[k].colour+'"></span>';
+		let disease_color = '&thinsp;<span style="padding-left:5px;background:'+opts.diseases[k].color+'"></span>';
 		let diagnosis_age = d.data[v.type + "_diagnosis_age"];
 
 		table += "<tr><td style='text-align:right'>"+capitaliseFirstLetter(v.type.replace("_", " "))+
-					disease_colour+"&nbsp;</td><td>" +
+					disease_color+"&nbsp;</td><td>" +
 					"<input class='form-control' id='id_" +
 					v.type + "_diagnosis_age_0' max='110' min='0' name='" +
 					v.type + "_diagnosis_age_0' style='width:5em' type='number' value='" +
