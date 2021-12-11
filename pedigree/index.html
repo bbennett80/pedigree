@@ -66,8 +66,8 @@
 							['rad51d_gene_test', 'rad51c_gene_test', 'brip1_gene_test'],
 							['er_bc_pathology', 'pr_bc_pathology', 'her2_bc_pathology', 'ck14_bc_pathology', 'ck56_bc_pathology']
 						],
-					'DEBUG': (pedigree_utils.urlParam('debug') === null ? false : true)};
-
+					'DEBUG': (pedigree_utils.urlParam('debug') === null ? false : true)};	
+		
 			var local_dataset = pedcache.current(opts);
 			if (local_dataset !== undefined && local_dataset !== null) {
 				opts.dataset = local_dataset;
