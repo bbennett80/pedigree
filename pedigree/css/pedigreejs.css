@@ -31,13 +31,6 @@ a[href^="ftp://"][target=_blank]:after {
 	transform:rotate(45deg);
 }
 
-.header {
-	background-color:#DDD1C1;
-	margin-right: auto;
-	margin-left: auto;
-	margin-bottom: 20px;
-}
-
 .btn.btn-primary {
 	color: #fff;
 	background-color: #337ab7;
@@ -100,6 +93,7 @@ body {
 	color: #333;
 	background-color: #fff;
 }
+
 .container {
 	width: 90%;
 	max-width: 1140px;
