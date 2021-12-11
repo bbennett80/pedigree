@@ -15,64 +15,227 @@
 	<script src="https://cdn.jsdelivr.net/npm/d3@5.16.0/dist/d3.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
- 	<script src="./es/pedigree.js"></script>
+ 	<!-- <script src="./scripts/pedigreejs.js"></script> -->
+	<!-- <script type="module" src="./es/pedigree.js"></script> -->
+	<script type="module">
 
-	<script type="text/javascript">
-	
-	$( document ).ready(function() {
-		if(pedigreejs.pedigree_utils.isIE()) {
-			var s = document.createElement("script");
-			s.type = "text/javascript";
-			s.src = "https://cdn.jsdelivr.net/npm/canvg@3.0.7/lib/umd.js";
-			$("head").append(s);
-		}
-		////////////////////
-		var dataset = [
-			{"name": "m11", "sex": "M", "top_level": true},
-			{"name": "f11", "display_name": "Jane",  "sex": "F", "status": 1, "top_level": true, "breast_cancer_diagnosis_age":67, "ovarian_cancer_diagnosis_age":63},
-			{"name": "m12", "sex": "M", "top_level": true},
-			{"name": "f12", "sex": "F", "top_level": true, "breast_cancer_diagnosis_age":55},
-			{"name": "m21", "sex": "M", "mother": "f11", "father": "m11", "age": 56},
-			{"name": "f21", "sex": "F", "mother": "f12", "father": "m12", "breast_cancer_diagnosis_age":55, "breast_cancer2_diagnosis_age": 60, "ovarian_cancer_diagnosis_age":58, "age": 63},
-			{"name": "ch1", "display_name": "Ana", "sex": "F", "mother": "f21", "father": "m21", "proband": true, "age": 25, "yob": 1996}
-		];
-		$( "#pedigrees" ).append( $( "<div id='pedigree_history'></div>" ) );
-		$( "#pedigrees" ).append( $( "<div id='pedigree'></div>" ) );
 
-		var opts = {
-				'targetDiv': 'pedigree',
-				'btn_target': 'pedigree_history',
-			//	'nodeclick': pedigree_form.nodeclick,
-				'width': ($(window).width() > 450 ? 390 : $(window).width()- 30),
-				'height': 280,
-				'symbol_size': 30,
-				'edit': true,
-				'zoomIn': .5,
-				'zoomOut': 1.5,
-				'font_size': '0.75em',
-	        	'diseases': [{'type': 'breast_cancer', 'colour': '#F68F35'},
-	        				 {'type': 'breast_cancer2', 'colour': 'pink'},
-							 {'type': 'ovarian_cancer', 'colour': '#4DAA4D'},
-							 {'type': 'pancreatic_cancer', 'colour': '#4289BA'},
-							 {'type': 'prostate_cancer', 'colour': '#D5494A'}],
-				'DEBUG': (pedigreejs.pedigree_utils.urlParam('debug') === null ? false : true)};
-		var local_dataset = pedigreejs.pedcache.current(opts);
-		if (local_dataset !== undefined && local_dataset !== null) {
-			opts.dataset = local_dataset;
-		} else {
-			opts.dataset = dataset;
-		}
-		opts = pedigreejs.pedigreejs.build(opts);
-	});
+		import * as pedigree from './es/pedigree.js';
+		import * as pedigree_utils from './es/pedigree_utils.js';
+		import * as pedigree_form from './es/pedigree_form.js';
+		import * as pedcache from './es/pedcache.js'; 
+		import * as io from './es/io.js';
+		import * as canrisk_file from './es/canrisk_file.js';
+
+		
+		// if(isIE()) {
+		// 	document.write('<script src="https://cdn.jsdelivr.net/npm/canvg@2.0.0/dist/browser/canvg.min.js"><\/script>');
+		// }
+		
+		var DEFAULT_DISEASES = [
+				{'type': 'breast_cancer', 'color': '#F68F35'},
+				{'type': 'ovarian_cancer', 'color': '#4DAA4D'},
+				{'type': 'pancreatic_cancer', 'color': '#4289BA'},
+				{'type': 'prostate_cancer', 'color': '#D5494A'}
+			];
 	
-	</script>
+		$( document ).ready(function() {
+			var dataset = [
+				{"name":"paternalgf","sex":"M","top_level":true},
+				{"name":"paternalgm","sex":"F","top_level":true},
+				{"name":"maternalgf","sex":"M","top_level":true},
+				{"name":"maternalgm","sex":"F","top_level":true},
+				{"name":"father","display_name":"","sex":"M","mother":"paternalgm","father":"paternalgf"},
+				{"name":"mother","display_name":"","sex":"F","mother":"maternalgm","father":"maternalgf"},
+				{"name":"ch1","display_name":"","sex":"F","mother":"mother","father":"father","proband":true}
+			];
+			$( "#pedigrees" ).append( $( "<div id='pedigree_history'></div>" ) );
+			$( "#pedigrees" ).append( $( "<div id='pedigree'></div>" ) );
+
+			var opts = {
+					'targetDiv': 'pedigree',
+					'btn_target': 'pedigree_history',
+				//	'nodeclick': pedigree_form.nodeclick,
+					'width': ($(window).width() > 450 ? 690 : $(window).width()- 30),
+					'height': 480,
+					'symbol_size': 30,
+					'edit': true,
+					'zoomSrc': ['button', 'wheel'],
+					'zoomIn': .05,
+					'zoomOut': 1.5,
+					'optionalLabels': [
+						['brca1_gene_test', 'brca2_gene_test', 'palb2_gene_test', 'chek2_gene_test', 'atm_gene_test'],
+						['rad51d_gene_test', 'rad51c_gene_test', 'brip1_gene_test'],
+						['er_bc_pathology', 'pr_bc_pathology', 'her2_bc_pathology', 'ck14_bc_pathology', 'ck56_bc_pathology']
+					],
+					'labels': [
+						['age', 'yob'],
+							['brca1_gene_test', 'brca2_gene_test', 'palb2_gene_test', 'chek2_gene_test', 'atm_gene_test'],
+							['rad51d_gene_test', 'rad51c_gene_test', 'brip1_gene_test'],
+							['er_bc_pathology', 'pr_bc_pathology', 'her2_bc_pathology', 'ck14_bc_pathology', 'ck56_bc_pathology']
+						],
+					'DEBUG': (pedigree_utils.urlParam('debug') === null ? false : true)};
+
+			var local_dataset = pedcache.current(opts);
+			if (local_dataset !== undefined && local_dataset !== null) {
+				opts.dataset = local_dataset;
+			} else {
+				opts.dataset = dataset;
+			}
+			opts = pedigree.build(opts);
+
+		// edit disease configuration
+		$('#fh_edit_settings').on( "click", function() {
+			$('#fh_settings').dialog({
+			    autoOpen: false,
+			    title: "Disease Configuration",
+			    buttons: [
+			        {
+			        	text: "RESET",
+			          	click: function() {
+			          		$("#reset_dialog").dialog({
+			          	        modal: true,
+			          	        buttons: {
+			          	          Yes: function() {
+							      	newdataset = pedigreejs.pedigree_utils.copy_dataset(pedigreejs.pedcache.current(opts));
+							        opts.dataset = newdataset;
+							        opts.diseases = $.extend(true, [], DEFAULT_DISEASES);
+							        ptree.rebuild(opts);
+							        update_diseases();
+							        localStorage.setItem('diseases', JSON.stringify(opts.diseases));
+							        $(this).dialog("close");
+			          	          },
+			          	          No: function() {
+			          	          	$(this).dialog("close");
+			          	          }
+			          	        }
+			          	      });
+				        }
+				    },
+			        {
+			          text: "OK",
+			          click: function() {
+			            $( this ).dialog( "close" );
+			            newdataset = pedigreejs.pedigree_utils.copy_dataset(pedigreejs.pedcache.current(opts));
+			            opts.dataset = newdataset;
+			            pedigreejs.pedigreejs.rebuild(opts);
+			          }
+			        }
+			      ],
+			    width: ($(window).width() > 400 ? 450 : $(window).width()- 30)
+			});
+			var html_dis =
+				'<br><div class="row">'+
+					'<div class="col-md-4 text-right">'+
+				  		'<label for="dis_name">Add Disease:</label>' +
+					'</div>' +
+					'<div class="col-md-6">'+
+			  			'<input type="text" class="form-control" id="dis_name">' +
+					'</div>' +
+					'<div class="col-md-2">'+
+						'<label class="btn btn-default btn-file">' +
+							'<input id="add_disease" type="button" style="display: none;"/><i class="fa fa-plus" aria-hidden="true"></i>' +
+						'</label>' +
+					'</div>' +
+				'</div><br><div id="disease_table"></div>';
+				
+			function validTextcolor(stringToTest) {
+			    //Alter the following conditions according to your need.
+			    if (stringToTest === "") { return false; }
+			    if (stringToTest === "inherit") { return false; }
+			    if (stringToTest === "transparent") { return false; }
+			    
+			    var image = document.createElement("img");
+			    image.style.color = "rgb(0, 0, 0)";
+			    image.style.color = stringToTest;
+			    if (image.style.color !== "rgb(0, 0, 0)") { return true; }
+			    image.style.color = "rgb(255, 255, 255)";
+			    image.style.color = stringToTest;
+			    var isValid = image.style.color !== "rgb(255, 255, 255)";
+			    image.remove();
+			    return isValid;
+			}
+
+			function update_diseases() {
+				var tab = "<table class='table table-condensed table-striped table-bordered'>" +
+							"<thead><tr><th>Disease</th><th>color</th><th></th></tr></thead>";
+				$.each(opts.diseases, function(k, v) {
+					var disease_color = '&thinsp;<span style="padding-left:5px;background:'+opts.diseases[k].color+'"></span>';
+					tab += "<tr>" +
+								"<td style='text-align:right'>"+v.type.replace(/_/g , " ")+
+									disease_color+"&nbsp;</td>" +
+								"<td>" +
+							      "<input type='text' class='form-control' id='disease_color-"+v.type+"' value='" + opts.diseases[k].color + "'>" +
+								"</td>" +
+								"<td>" +
+									"<label class='btn btn-default btn-sm'>" +
+										"<input id='delete_disease-"+v.type+"' type='button' style='display: none;'/>" +
+											"<i class='fa fa-times' aria-hidden='true' style='color:#8B0000'></i>" +
+									"</label>" +
+								"</td>" +
+							"</tr>";
+				});
+				tab += "</table>";
+				$('#disease_table').html(tab);
+
+				$("input[id^='delete_disease-']").on( "click", function() {
+					var this_disease = $(this).attr('id').replace('delete_disease-', '');
+					var new_diseases = $.extend(true, [], opts.diseases);
+					new_diseases = new_diseases.filter(function(el) {
+					    return el.type !== this_disease;
+					});
+					opts.diseases = new_diseases;
+					localStorage.setItem('diseases', JSON.stringify(opts.diseases));
+					update_diseases();
+				});
+
+				$('input[id^="disease_color-"]').on('keypress mouseleave', function(e) {
+	                var code = (e.keyCode ? e.keyCode : e.which);
+	                if (code == 13 || code == 0) {
+	                	var this_disease = $(this).attr('id').replace('disease_color-', '');
+						var this_color = $(this).val();
+						// test if valid color string or hex
+						if(!validTextcolor(this_color) && !/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(this_color)){
+							console.error('Invalid color!', this_color);
+							return;
+						}
+						var new_diseases = $.extend(true, [], opts.diseases);
+						$.each(new_diseases, function(index, value) {
+	 						if(value.type == this_disease) {
+	 							value.color = this_color;
+	 						}
+						});
+						opts.diseases = new_diseases;
+						localStorage.setItem('diseases', JSON.stringify(opts.diseases));
+						update_diseases();
+	                }
+	            });
+			}
+
+			$('#fh_settings').html(html_dis);
+			update_diseases();
+			$('#fh_settings').dialog('open');
+			
+			$('#add_disease').on( "click", function() {
+				if($('#dis_name').val() == "")
+					return;
+				var new_diseases = $.extend(true, [], opts.diseases);
+				new_diseases.push({'type': $('#dis_name').val().replace(/\s/g , "_"), 'color': 'purple'});
+				opts.diseases = new_diseases;
+				localStorage.setItem('diseases', JSON.stringify(opts.diseases));
+				update_diseases();
+				});
+			});
+		});
+
+		</script>
 </head>
 
 <body>
 <br>
 	<div class="text-center">
 		<h3>Pedigree</h3>
-		<h5>Genetic Cancer Rish Assessment</h5>
+		<h5>Genetic Cancer Risk Assessment</h5>
 		<label class="btn btn-default btn-file">
 			<input id="load" type="file" style="display: none;"/>Load
 		</label>	
@@ -91,8 +254,9 @@
 		<label class="btn btn-default btn-file">
 			<input id="fh_edit_settings" type="button" style="display: none;"/><i class="fa fa-cog" aria-hidden="true"></i>
 		</label>
-		<div id="demo_history"></div>
+		<div id="pedigree_history"></div>
 		<div id="pedigrees"></div>
+		<div id="pedigree"></div>
 		<div id="node_properties"></div>
 		<div id="fh_settings"></div>
 		<div id="reset_dialog" title="Confirmation Disease Reset"></div>
@@ -131,17 +295,15 @@
 		</p>
 		<p>
 			Consanguineous partners can be created placing the mouse over one of the partners and clicking and dragging the
-			triple dashed line widget <img alt="handle" src="./img/handle.png"> in the direction of their new partner.
+			triple dashed line widget <img alt="handle" src="src/img/handle.png"> in the direction of their new partner.
 		</p>
 		
 	
 		<h3>Loading and Saving Pedigree Data</h3>
-		<p>
-			Pedigrees can be saved and uploaded. Support is given to loading:
-			<li><a href="https://canrisk.atlassian.net/wiki/x/IoCeAg" target="_blank">CanRisk files</a></li>
-			<li><a href="https://pluto.srl.cam.ac.uk/bd4/v4/docs/BWA_v4_Appendix_A.pdf" target="_blank">BOADICEA v4 files</a></li>
-			<li><a href="https://www.cog-genomics.org/plink/1.9/formats#ped" target="_blank">PED files</a></li>
-		</p>
+		<p>The pedigree can be saved out and loaded back in. Support is given to loading
+			<a href="https://canrisk.atlassian.net/wiki/x/IoCeAg" target="_blank">CanRisk files</a>,
+			<a href="https://pluto.srl.cam.ac.uk/bd4/v4/docs/BWA_v4_Appendix_A.pdf" target="_blank">BOADICEA v4 files</a>,
+			and <a href="https://www.cog-genomics.org/plink/1.9/formats#ped" target="_blank">PED files</a>.<p>
 		<p>
 			Adapted from <a href="https://github.com/CCGE-BOADICEA/pedigreejs", target="_blank">pedigreejs.</a>
 			View project and contact on <a href="https://github.com/bbennett80/pedigree" target="_blank">GitHub.</a>
