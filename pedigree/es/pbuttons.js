@@ -179,24 +179,12 @@ export function reset(opts, keep_proband) {
 			{"name":"Knx","display_name":"son","sex":"M","mother":"ch1","father":"Spj","status":"0"}];
 	} else {
 		opts.dataset = [
-			// {"name": "father", "display_name": "", "sex": "M", "top_level": true},
-			// {"name": "mother", "display_name": "", "sex": "F", "top_level": true},
-
-
-			// {"name":"paternalgf","sex":"M","top_level":true},
-			// {"name":"paternalgm","sex":"F","top_level":true},
-			// {"name":"maternalgf","sex":"M","top_level":true},
-			// {"name":"maternalgm","sex":"F","top_level":true},
-			// {"name":"father","display_name":"","sex":"M","mother":"paternalgm","father":"paternalgf"},
-			// {"name":"mother","display_name":"","sex":"F","mother":"maternalgm","father":"maternalgf"},
-
 			{"name":"paternalgf","sex":"M","top_level":true},
 			{"name":"paternalgm","sex":"F","top_level":true},
 			{"name":"maternalgf","sex":"M","top_level":true},
 			{"name":"maternalgm","sex":"F","top_level":true},
 			{"name":"father","display_name":"","sex":"M","mother":"paternalgm","father":"paternalgf"},
 			{"name":"mother","display_name":"","sex":"F","mother":"maternalgm","father":"maternalgf"},
-
 			proband];
 	}
 	rebuild(opts);
